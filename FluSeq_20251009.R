@@ -75,7 +75,7 @@ for (season in seq(2009,2019)){
       na.value = "grey90"
     ) +
     labs(
-      title = "US State Heatmap by Weight (Season 2019)",
+      title = paste0("Antigenic Weight (Season:)",season),
       subtitle = "Each state's total weight value"
     ) +
     theme_minimal() +                               # replaces buggy default theme
