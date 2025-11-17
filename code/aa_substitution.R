@@ -4,7 +4,7 @@ library(tidyverse)
 ## given the amino acid substitutions between the two.
 ## Written by: Kyueun Lee
 ## Generated Nov 1, 2025
-## Last moditifed: Nov 12, 2025
+## Last moditifed: Nov 16, 2025
 
 
 setwd("/Users/kyueunlee/Library/CloudStorage/OneDrive-UW/My Drive/Z Drive/Project_all/2025_FluSeq/data")
@@ -59,9 +59,9 @@ get_mutations_path <- function(dt, start_node, end_node) {
   }
   # Add the AA substitutions from vax parent node to vax node
   last <- dt %>% filter(name == end_node & parent_name == current_node)
-  muts_ha1 <- last$aa_sub1
-  muts_ha2 <- last$aa_sub2
-  muts_sigpep <- last$sigpep
+  muts_ha1 <- stringi::stri_reverse(last$aa_sub1)
+  muts_ha2 <- stringi::stri_reverse(last$aa_sub2)
+  muts_sigpep <- stringi::stri_reverse(last$sigpep)
   
   path_mutations_ha1 <- c(path_mutations_ha1, muts_ha1)
   path_mutations_ha2 <- c(path_mutations_ha2, muts_ha2)
@@ -112,7 +112,7 @@ weight <- weight %>%
     aa_list = str_extract(substitution, "(?<=:)\\S+"),
     Season = ifelse(month(timepoint)==10,year(timepoint),year(timepoint)-1)
   ) %>%
-  filter(month(timepoint)==4)
+  filter(month(timepoint)==10)
 
 # link weight dataset to the analytic dataset
 dt_vax_clade2_long <- read.csv("Clade_vax_AA_antgdistance_long.csv")
@@ -129,5 +129,5 @@ summary_weight <- dt_vax_clade2_long_wt %>%
   summarize(
     tot_weight=sum(weight)
   )
-write.csv(summary_weight, "Total_weight_summary.csv")
+write.csv(summary_weight, "Total_weight_summary(October).csv")
 
